@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/law-app/static/css/main.93a0497a.css",
-    "main.js": "/law-app/static/js/main.00e61d12.js",
+    "main.js": "/law-app/static/js/main.bb832702.js",
     "index.html": "/law-app/index.html",
     "main.93a0497a.css.map": "/law-app/static/css/main.93a0497a.css.map",
-    "main.00e61d12.js.map": "/law-app/static/js/main.00e61d12.js.map"
+    "main.bb832702.js.map": "/law-app/static/js/main.bb832702.js.map"
   },
   "entrypoints": [
     "static/css/main.93a0497a.css",
-    "static/js/main.00e61d12.js"
+    "static/js/main.bb832702.js"
   ]
 }
