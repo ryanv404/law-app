@@ -22,7 +22,7 @@ const Search = () => {
           <label htmlFor="case_search">
             <input type="text" name="case_search" id="case_search"
             onChange={(e) => setText(e.target.value)} value={text} 
-            autoComplete="off"
+            autoComplete="off" autoFocus="true"
             />
           </label>
           <button type="submit">Search</button>
