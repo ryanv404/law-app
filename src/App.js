@@ -1,15 +1,18 @@
 import './App.css';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Header from './components/Header';
 import Main from './components/Main';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <Header />
       <Main />
       {/* <Footer /> */}
-    </div>
+    </QueryClientProvider>
   );
 }
 

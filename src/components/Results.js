@@ -9,6 +9,6 @@ const Results = ({ results }) => {
   return (
     <ul>{listItems ? listItems : "No results."}</ul>
   )
-}
+};
 
 export default Results
