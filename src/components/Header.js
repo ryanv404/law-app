@@ -1,8 +1,13 @@
 import React from 'react'
 
 const Header = () => {
+  const style = {
+    borderBottom: "1px solid black",
+    textAlign: "center"
+  }
+
   return (
-    <div>Header</div>
+    <div style={style}>Header</div>
   )
 }
 

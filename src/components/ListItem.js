@@ -1,25 +1,29 @@
-import React from 'react'
+import React from 'react';
 
-const ListItem = ({ result }) => {
-  const citationFilter = (citationsList) => {
-    const officialCite = citationsList.filter((citation) => citation.type === "official");
-    return officialCite ? officialCite[0].cite : citationsList[0].cite
-  };
+const fortmatResponse = (res) => {
+  return JSON.stringify(res, null, 2);
+};
 
-  const citation = citationFilter(result.citations);
+const ListItem = ({ data }) => {
+  // const citationFilter = (citationsList) => {
+  //   const officialCite = citationsList.filter((citation) => citation.type === "official");
+  //   return officialCite ? officialCite[0].cite : citationsList[0].cite
+  // };
 
-  const caseFormat = {
-    "name": result.name,
-    "reporter": result.reporter.full_name,
-    "court": result.court.name,
-  };
+  // const citation = citationFilter(data.citations);
 
-  const singleCase = `${result.name_abbreviation}, ${citation} (${result.court.name_abbreviation} ${result.decision_date})`
+  // const caseFormat = {
+  //   "name": data.name,
+  //   "reporter": data.reporter.full_name,
+  //   "court": data.court.name,
+  // };
+
+  // const singleCase = `${data.name_abbreviation}, ${citation} (${data.court.name_abbreviation} ${data.decision_date})`
 
   return (
     <li>
-      <p>{singleCase} - <a href={`${result.frontend_url}`}>Online text</a> - <a href={`${result.frontend_pdf_url}`}>PDF</a></p>
-      <pre>{JSON.stringify(caseFormat, null, 2)}</pre>
+      {/* <p>{singleCase} - <a href={`${data.frontend_url}`}>Online text</a> - <a href={`${data.frontend_pdf_url}`}>PDF</a></p> */}
+      <pre>{fortmatResponse(data)}</pre>
     </li>
   )
 }

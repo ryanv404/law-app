@@ -1,13 +1,17 @@
-import React from 'react'
+import React from 'react';
 import ListItem from './ListItem';
 
-const Results = ({ results }) => {
-  const listItems = results?.data?.results && results.data.results.map((result) => (
-    <ListItem key={result.id} result={result} />
+const Results = ({ resultsList, numResults }) => {
+  const listItems = resultsList.map((item) => (
+    <ListItem key={item.id} data={item} />
   ));
 
   return (
-    <ul>{listItems ? listItems : "No results."}</ul>
+    <div>
+      <p>{`Found ${numResults} ${numResults === 1 ? "result" : "results"}.`}</p>
+      <h3>Search results:</h3>
+      <ul>{listItems ? listItems : "No results found."}</ul>
+    </div>
   )
 };
 
