@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { Button, TextField, Typography, Box } from '@mui/material';
+import axios from 'axios';
 import Results from './Results';
 
 const URL_CAP = "https://api.case.law/v1/cases/?search=";
@@ -56,24 +57,37 @@ const Search = () => {
 
   return (
     <>
-      <div>
-        <h1>Law App</h1>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label htmlFor="case_search">
-            <input type="text" name="case_search" id="case_search"
-            onChange={(e) => setSearchText(e.target.value)} value={searchText} 
-            autoComplete="off" placeholder="Search for a case..." style={{width: "300px"}}
-            />
-          </label>
-          <button type="submit" onClick={fetchCAP}>
+      <Typography component="h1" variant="h2" align="center">Law App</Typography>
+      <Box component="form" onSubmit={(e) => e.preventDefault()}
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <TextField variant="outlined" type="text" name="case_search" id="case_search"
+          onChange={(e) => setSearchText(e.target.value)} value={searchText} 
+          autoComplete="off" label="Search for a case"
+          sx={{width: "100%"}}
+          />
+        <Box
+          sx={{
+            my: 4,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Button variant='outlined' color='secondary' type="submit" onClick={fetchCAP} sx={{mr: 2}}>
             Search CAP
-          </button>
-          <button type="submit" onClick={fetchCL}>
+          </Button>
+          <Button variant='outlined' type="submit" onClick={fetchCL}>
             Search CourtListener
-          </button>
-        </form>
-      </div>
-      {(isLoadingCAP || isLoadingCL) && <p>Loading...</p>}
+          </Button>
+        </Box>
+      </Box>
+      {(isLoadingCAP || isLoadingCL) && <Typography component="p" align='center' mb={2}>Loading...</Typography>}
       {(isErrorCAP || isErrorCL) && (!isLoadingCAP && !isLoadingCL) && <pre>{errorMsg}</pre>}
       {searchResult && (!isLoadingCAP && !isLoadingCL) && <Results resultsList={searchResult} numResults={numResults} />}
     </>

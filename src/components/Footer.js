@@ -1,9 +1,12 @@
-import React from 'react'
+import { Typography } from "@mui/material";
 
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <Typography variant="body2" color="text.secondary" align="center">
+      {'Copyright © Ryan '}
+      {new Date().getFullYear()}.
+    </Typography>
   )
-}
+};
 
-export default Footer
+export default Footer;

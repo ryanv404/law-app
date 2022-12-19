@@ -1,18 +1,18 @@
-import React from 'react';
-import ListItem from './ListItem';
+import { Typography, List } from '@mui/material';
+import SingleListItem from './ListItem';
 
 const Results = ({ resultsList, numResults }) => {
   const listItems = resultsList.map((item) => (
-    <ListItem key={item.id} data={item} />
+    <SingleListItem key={item.id} data={item} />
   ));
 
   return (
-    <div>
-      <p>{`Found ${numResults} ${numResults === 1 ? "result" : "results"}.`}</p>
-      <h3>Search results:</h3>
-      <ul>{listItems ? listItems : "No results found."}</ul>
-    </div>
+    <>
+      <Typography component="h3"  align='center' variant="h5">Search results:</Typography>
+      <Typography component="p" align='center' mb={5}>{`Found ${numResults} ${numResults === 1 ? "result" : "results"}.`}</Typography>
+      <List>{listItems ? listItems : <Typography component="p" align='center' mb={2}>"No results found."</Typography>}</List>
+    </>
   )
 };
 
-export default Results
+export default Results;

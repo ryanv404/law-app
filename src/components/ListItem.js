@@ -1,10 +1,10 @@
-import React from 'react';
+import { ListItem, ListItemText } from "@mui/material";
 
-const fortmatResponse = (res) => {
-  return JSON.stringify(res, null, 2);
-};
+// const fortmatResponse = (res) => {
+//   return JSON.stringify(res, null, 2);
+// };
 
-const ListItem = ({ data }) => {
+const SingleListItem = ({ data }) => {
   // const citationFilter = (citationsList) => {
   //   const officialCite = citationsList.filter((citation) => citation.type === "official");
   //   return officialCite ? officialCite[0].cite : citationsList[0].cite
@@ -21,11 +21,24 @@ const ListItem = ({ data }) => {
   // const singleCase = `${data.name_abbreviation}, ${citation} (${data.court.name_abbreviation} ${data.decision_date})`
 
   return (
-    <li>
-      {/* <p>{singleCase} - <a href={`${data.frontend_url}`}>Online text</a> - <a href={`${data.frontend_pdf_url}`}>PDF</a></p> */}
-      <pre>{fortmatResponse(data)}</pre>
-    </li>
+    <ListItem sx={{
+      flexDirection: "column",
+      alignItems: "flex-start"
+    }}>
+      <ListItemText
+        primary={data.hasOwnProperty("name_abbreviation") ? data.name_abbreviation : data.caseName}
+      />
+      {/* <ListItemText 
+        component="pre" 
+        sx={{
+          whiteSpace: 'pre-wrap', 
+          overflowWrap: 'break-word', 
+          maxWidth: '100vh'
+        }}
+        primary={fortmatResponse(data)}
+      /> */}
+    </ListItem>
   )
 }
 
-export default ListItem
+export default SingleListItem;

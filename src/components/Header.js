@@ -1,14 +1,11 @@
-import React from 'react'
+import { Typography } from "@mui/material";
 
 const Header = () => {
-  const style = {
-    borderBottom: "1px solid black",
-    textAlign: "center"
-  }
-
   return (
-    <div style={style}>Header</div>
+    <Typography variant="body2" color="text.secondary" align="center">
+      Header
+    </Typography>
   )
-}
+};
 
-export default Header
+export default Header;

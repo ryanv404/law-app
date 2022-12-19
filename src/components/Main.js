@@ -1,12 +1,12 @@
-import React from 'react';
+import { Box } from '@mui/material';
 import Search from './Search';
 
 const Main = () => {
   return (
-    <main>
-      <Search className="app" />
-    </main>
+    <Box sx={{my: 5}}>
+      <Search />
+    </Box>
   )
 };
 
-export default Main
+export default Main;
