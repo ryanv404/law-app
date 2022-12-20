@@ -2,7 +2,15 @@ import { Typography } from "@mui/material";
 
 const Header = () => {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography 
+      color="text.secondary" 
+      align="center"
+      sx={{
+        flex: "none",
+        height: "40px",
+        lineHeight: "40px"
+      }}
+    >
       Header
     </Typography>
   )

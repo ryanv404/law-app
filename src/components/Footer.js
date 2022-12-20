@@ -2,9 +2,16 @@ import { Typography } from "@mui/material";
 
 const Footer = () => {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © Ryan '}
-      {new Date().getFullYear()}.
+    <Typography 
+      color="text.secondary" 
+      align="center" 
+      sx={{
+        flex: "none",
+        height: "40px",
+        lineHeight: "40px"
+      }}
+    >
+      {`Copyright © Ryan ${new Date().getFullYear()}.`}
     </Typography>
   )
 };

@@ -3,7 +3,14 @@ import Search from './Search';
 
 const Main = () => {
   return (
-    <Box sx={{my: 5}}>
+    <Box 
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        flexGrow: '1'
+      }}
+    >
       <Search />
     </Box>
   )

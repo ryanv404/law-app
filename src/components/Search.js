@@ -57,39 +57,74 @@ const Search = () => {
 
   return (
     <>
-      <Typography component="h1" variant="h2" align="center">Law App</Typography>
-      <Box component="form" onSubmit={(e) => e.preventDefault()}
+      <Typography 
+        component="h1" 
+        variant="h2" 
+        align="center"
+      >
+        Law App
+      </Typography>
+      <Box 
+        component="form" 
+        onSubmit={(e) => e.preventDefault()}
         sx={{
-          marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          mb: 5
         }}
       >
-        <TextField variant="outlined" type="text" name="case_search" id="case_search"
-          onChange={(e) => setSearchText(e.target.value)} value={searchText} 
-          autoComplete="off" label="Search for a case"
-          sx={{width: "100%"}}
-          />
+        <TextField 
+          variant="outlined" 
+          type="text" 
+          name="case_search" 
+          id="case_search"
+          onChange={(e) => setSearchText(e.target.value)} 
+          value={searchText} 
+          autoComplete="off" 
+          label="Search for a case"
+          sx={{
+            my: 3
+          }}
+        />
         <Box
           sx={{
-            my: 4,
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
+            justifyContent: 'center'
           }}
         >
-          <Button variant='outlined' color='secondary' type="submit" onClick={fetchCAP} sx={{mr: 2}}>
+          <Button 
+            variant='outlined' 
+            color='secondary' 
+            type="submit" 
+            onClick={fetchCAP} 
+            sx={{
+              mr: 2
+            }}
+          >
             Search CAP
           </Button>
-          <Button variant='outlined' type="submit" onClick={fetchCL}>
+          <Button 
+            variant='outlined' 
+            type="submit" 
+            onClick={fetchCL}
+          >
             Search CourtListener
           </Button>
         </Box>
       </Box>
-      {(isLoadingCAP || isLoadingCL) && <Typography component="p" align='center' mb={2}>Loading...</Typography>}
-      {(isErrorCAP || isErrorCL) && (!isLoadingCAP && !isLoadingCL) && <pre>{errorMsg}</pre>}
-      {searchResult && (!isLoadingCAP && !isLoadingCL) && <Results resultsList={searchResult} numResults={numResults} />}
+      {(isLoadingCAP || isLoadingCL) 
+        && <Typography component="h3" variant="h6">Loading...</Typography>
+      }
+      {(isErrorCAP || isErrorCL) 
+        && (!isLoadingCAP && !isLoadingCL) 
+        && <pre>{errorMsg}</pre>
+      }
+      {searchResult 
+        && (!isLoadingCAP && !isLoadingCL) 
+        && <Results resultsList={searchResult} numResults={numResults} />
+      }
     </>
   )
 }
