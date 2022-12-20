@@ -8,7 +8,9 @@ const Header = () => {
       sx={{
         flex: "none",
         height: "40px",
-        lineHeight: "40px"
+        lineHeight: "40px",
+        borderBottom: "1px solid white",
+        marginBottom: "40px"
       }}
     >
       Header

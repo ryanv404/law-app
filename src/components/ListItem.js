@@ -6,29 +6,34 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Button } from "@mui/material";
+  Button, 
+  Link} from "@mui/material";
 import { useState } from "react";
 
-const fortmatResponse = (res) => {
-  return JSON.stringify(res, null, 2);
+// const fortmatResponse = (res) => {
+//   return JSON.stringify(res, null, 2);
+// };
+
+const formatCase = (caseInfo) => {
+  const searchEngine = caseInfo.hasOwnProperty("name_abbreviation") ? "CAP" : "CL";
+  let caseTitle, caseYear, caseURL, caseCourt;
+
+  if (searchEngine === "CL") {
+    caseYear = new Date(caseInfo.dateFiled).getFullYear();
+    caseTitle = `${caseInfo.caseName}, ${caseInfo.citation[0]} (${caseYear}).`;
+    caseURL = `https://www.courtlistener.com${caseInfo.absolute_url}`;
+    caseCourt = caseInfo.court;
+  } else if (searchEngine === "CAP") {
+    caseYear = new Date(caseInfo.decision_date).getFullYear();
+    caseTitle = `${caseInfo.name_abbreviation}, ${caseInfo.citations[0].cite} (${caseYear}).`;
+    caseURL = caseInfo.frontend_url;
+    caseCourt = caseInfo.court.name;
+  }
+
+  return [caseTitle, caseURL, caseCourt];
 };
 
 const SingleListItem = ({ data, idx }) => {
-  // const citationFilter = (citationsList) => {
-  //   const officialCite = citationsList.filter((citation) => citation.type === "official");
-  //   return officialCite ? officialCite[0].cite : citationsList[0].cite
-  // };
-
-  // const citation = citationFilter(data.citations);
-
-  // const caseFormat = {
-  //   "name": data.name,
-  //   "reporter": data.reporter.full_name,
-  //   "court": data.court.name,
-  // };
-
-  // const singleCase = `${data.name_abbreviation}, ${citation} (${data.court.name_abbreviation} ${data.decision_date})`
-
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,7 +48,7 @@ const SingleListItem = ({ data, idx }) => {
     margin: "5px 0",
     backgroundColor: bgColor
   };
-  const listItemTitle = data.hasOwnProperty("name_abbreviation") ? data.name_abbreviation : data.caseName;
+  const [listItemTitle, listItemURL, listItemCourt] = formatCase(data);
 
   return (
     <ListItem sx={listItemStyle}>
@@ -59,9 +64,18 @@ const SingleListItem = ({ data, idx }) => {
       >
         <DialogTitle>{listItemTitle}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="dialog-content">
-            <pre>{fortmatResponse(data)}</pre>
+          <DialogContentText id="dialog-content" mb={4}>
+            {listItemCourt}
+            {/* <pre>{fortmatResponse(data)}</pre> */}
           </DialogContentText>
+          <Link 
+            href={listItemURL} 
+            underline="hover"
+            target="_blank"
+            rel="noopener"
+          >
+            Full text
+          </Link>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
