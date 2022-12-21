@@ -19,16 +19,18 @@ const fortmatResponse = (res) => {
 
 const formatCase = (caseInfo) => {
   const searchEngine = caseInfo.hasOwnProperty("name_abbreviation") ? "CAP" : "CL";
-  let caseTitle, caseYear, caseURL, caseCourt;
-
+  
+  let caseTitle, caseYear, caseURL, caseCourt, caseCite;
   if (searchEngine === "CL") {
     caseYear = new Date(caseInfo.dateFiled).getFullYear();
-    caseTitle = `${caseInfo.caseName}, ${caseInfo.citation[0]} (${caseYear}).`;
+    caseCite = caseInfo.citation !== null ? caseInfo.citation[0] : "___"
+    caseTitle = `${caseInfo.caseName}, ${caseCite} (${caseYear}).`;
     caseURL = `https://www.courtlistener.com${caseInfo.absolute_url}`;
     caseCourt = caseInfo.court;
   } else if (searchEngine === "CAP") {
     caseYear = new Date(caseInfo.decision_date).getFullYear();
-    caseTitle = `${caseInfo.name_abbreviation}, ${caseInfo.citations[0].cite} (${caseYear}).`;
+    caseCite = caseInfo.citations !== null ? caseInfo.citations[0].cite : "___"
+    caseTitle = `${caseInfo.name_abbreviation}, ${caseCite} (${caseYear}).`;
     caseURL = caseInfo.frontend_url;
     caseCourt = caseInfo.court.name;
   }

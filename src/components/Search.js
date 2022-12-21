@@ -22,19 +22,20 @@ const Search = () => {
   const [searchResult, setSearchResult] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [orderByDate, setOrderByDate] = useState(false);
+  const [orderDirection, setOrderDirection] = useState("asc");
   const [anchorEl, setAnchorEl] = useState(null);
   
   const open = Boolean(anchorEl);
   
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
-  const orderParam = orderByDate ? "&order_by=dateFiled%20desc" : "";
+
   // CAP -> "&ordering=-decision_date"
+  // CL -> "&order_by=dateFiled%20desc"
 
   const { isLoading: isLoadingCAP, isError: isErrorCAP, refetch: fetchCAP } = useQuery(
     ["CAP_results", searchText],
@@ -56,9 +57,9 @@ const Search = () => {
   );
 
   const { isLoading: isLoadingCL, isError: isErrorCL, refetch: fetchCL } = useQuery(
-    ["search_results", searchText, orderParam],
+    ["search_results", searchText],
     async ({ queryKey }) => {
-      const searchURL = `${URL_CL}${queryKey[1]}${orderParam}`;
+      const searchURL = `${URL_CL}${queryKey[1]}`;
       return await axios.get(searchURL);;
     },
     {
@@ -131,8 +132,18 @@ const Search = () => {
                       'aria-labelledby': 'basic-button',
                     }}
                   >
-                    <MenuItem onClose={handleClose}>Most recent cases first</MenuItem>
-                    <MenuItem onClose={handleClose}>Most recent cases last</MenuItem>
+                    <MenuItem
+                      onClick={(e) => setOrderDirection("desc")} 
+                      onClose={handleClose}
+                    >
+                        Most recent cases first
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(e) => setOrderDirection("asc")} 
+                      onClose={handleClose}
+                    >
+                      Most recent cases last
+                    </MenuItem>
                   </Menu>
                 </IconButton>
               </InputAdornment>

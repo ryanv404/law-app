@@ -31,7 +31,8 @@ root.render(
         <Container 
           sx={{
             height: "100vh", 
-            width: "100vw"
+            width: "100vw",
+            overflowX: "hidden"
           }}
           >
           <App />
