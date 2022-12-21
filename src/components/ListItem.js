@@ -7,12 +7,15 @@ import {
   DialogContentText,
   DialogActions,
   Button, 
-  Link} from "@mui/material";
+  Link,
+  Box, 
+  Typography} from "@mui/material";
+import LocationOnSharpIcon from '@mui/icons-material/LocationOnSharp';
 import { useState } from "react";
 
-// const fortmatResponse = (res) => {
-//   return JSON.stringify(res, null, 2);
-// };
+const fortmatResponse = (res) => {
+  return JSON.stringify(res, null, 2);
+};
 
 const formatCase = (caseInfo) => {
   const searchEngine = caseInfo.hasOwnProperty("name_abbreviation") ? "CAP" : "CL";
@@ -35,6 +38,7 @@ const formatCase = (caseInfo) => {
 
 const SingleListItem = ({ data, idx }) => {
   const [open, setOpen] = useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -46,16 +50,32 @@ const SingleListItem = ({ data, idx }) => {
   const listItemStyle = {
     padding: "10px",
     margin: "5px 0",
-    backgroundColor: bgColor
+    backgroundColor: bgColor,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start"
   };
   const [listItemTitle, listItemURL, listItemCourt] = formatCase(data);
 
   return (
-    <ListItem sx={listItemStyle}>
-      <ListItemText
-        primary={listItemTitle}
+    <>
+      <ListItem 
+        sx={listItemStyle}
         onClick={handleClickOpen}
-      />
+      >
+        <ListItemText primary={listItemTitle} />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            marginTop: "20px",
+            marginBottom: "10px"
+          }}
+          >
+          <LocationOnSharpIcon fontSize="small" />
+          <Typography variant="body2">{listItemCourt}</Typography>
+        </Box>
+      </ListItem>
       <Dialog
         open={open}
         keepMounted
@@ -65,8 +85,7 @@ const SingleListItem = ({ data, idx }) => {
         <DialogTitle>{listItemTitle}</DialogTitle>
         <DialogContent>
           <DialogContentText id="dialog-content" mb={4}>
-            {listItemCourt}
-            {/* <pre>{fortmatResponse(data)}</pre> */}
+            <pre>{fortmatResponse(data)}</pre>
           </DialogContentText>
           <Link 
             href={listItemURL} 
@@ -81,7 +100,7 @@ const SingleListItem = ({ data, idx }) => {
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
-    </ListItem>
+    </>
   )
 }
 

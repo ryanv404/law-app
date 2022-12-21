@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Button, TextField, Typography, Box } from '@mui/material';
+import GavelSharpIcon from '@mui/icons-material/GavelSharp';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import axios from 'axios';
 import Results from './Results';
 
@@ -56,13 +58,19 @@ const Search = () => {
   );
 
   return (
-    <>
+    <main>
       <Typography 
         component="h1" 
-        variant="h2" 
+        variant="h3" 
         align="center"
       >
-        Law App
+        Law Searcher
+        <GavelSharpIcon
+          sx={{
+            fontSize: "45px",
+            marginLeft: "15px",
+          }}
+        />
       </Typography>
       <Box 
         component="form" 
@@ -100,17 +108,21 @@ const Search = () => {
             type="submit" 
             onClick={fetchCAP} 
             sx={{
-              mr: 2
+              mr: 2,
+              py: 1
             }}
           >
-            Search CAP
+            <SearchRoundedIcon /> Search CAP
           </Button>
           <Button 
             variant='outlined' 
             type="submit" 
             onClick={fetchCL}
+            sx={{
+              py: 1
+            }}
           >
-            Search CourtListener
+            <SearchRoundedIcon /> Search CourtListener
           </Button>
         </Box>
       </Box>
@@ -125,7 +137,7 @@ const Search = () => {
         && (!isLoadingCAP && !isLoadingCL) 
         && <Results resultsList={searchResult} numResults={numResults} />
       }
-    </>
+    </main>
   )
 }
 

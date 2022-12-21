@@ -8,7 +8,11 @@ const Footer = () => {
       sx={{
         flex: "none",
         height: "40px",
-        lineHeight: "40px"
+        lineHeight: "40px",
+        fontSize: "14px",
+        borderTop: "1px solid white",
+        overflow: "hidden",
+        marginTop: "40px"
       }}
     >
       {`Copyright © Ryan ${new Date().getFullYear()}.`}
