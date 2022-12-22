@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { TextField, Typography, 
-  Box, InputAdornment, IconButton, Menu, MenuItem } from '@mui/material';
+import { 
+  TextField, 
+  Typography, 
+  Box, 
+  InputAdornment, 
+  IconButton, 
+  Menu, 
+  MenuItem 
+} from '@mui/material';
 import GavelSharpIcon from '@mui/icons-material/GavelSharp';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import SortRoundedIcon from '@mui/icons-material/SortRounded';
@@ -17,27 +24,33 @@ const fortmatResponse = (res) => {
 };
 
 const Search = () => {
+  const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const [numResults, setNumResults] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const [orderByDate, setOrderByDate] = useState(false);
   const [orderDirection, setOrderDirection] = useState("asc");
-  const [anchorEl, setAnchorEl] = useState(null);
+  // CAP -> "&ordering=-decision_date"
+  // CL -> "&order_by=dateFiled%20desc"
   
   const open = Boolean(anchorEl);
   
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  // CAP -> "&ordering=-decision_date"
-  // CL -> "&order_by=dateFiled%20desc"
-
-  const { isLoading: isLoadingCAP, isError: isErrorCAP, refetch: fetchCAP } = useQuery(
+  const { 
+    isLoading: isLoadingCAP, 
+    isError: isErrorCAP,
+    refetch: fetchCAP 
+  } = useQuery(
     ["CAP_results", searchText],
     async ({ queryKey }) => {
       const searchURL = `${URL_CAP}${queryKey[1]}`;
@@ -56,7 +69,11 @@ const Search = () => {
     }
   );
 
-  const { isLoading: isLoadingCL, isError: isErrorCL, refetch: fetchCL } = useQuery(
+  const { 
+    isLoading: isLoadingCL, 
+    isError: isErrorCL, 
+    refetch: fetchCL 
+  } = useQuery(
     ["search_results", searchText],
     async ({ queryKey }) => {
       const searchURL = `${URL_CL}${queryKey[1]}`;
@@ -80,14 +97,17 @@ const Search = () => {
       <Typography 
         component="h1" 
         variant="h3" 
-        align="center"
+        alignItems="center"
+        justifyContent="center"
         mt="20px"
+        display='flex'
       >
         Law Searcher
         <GavelSharpIcon
           sx={{
-            fontSize: "45px",
-            marginLeft: "15px",
+            fontSize: "3rem",
+            marginLeft: "25px",
+            color: '#ffcd38',
           }}
         />
       </Typography>
@@ -97,7 +117,8 @@ const Search = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          my: "40px"
+          mt: "40px",
+          mb: 4
         }}
       >
         <TextField 
@@ -115,37 +136,37 @@ const Search = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton edge='end'>
+                <IconButton edge='end' onClick={handleClick} onClose={handleClose}>
                   <SortRoundedIcon
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
+                    sx={{color: '#ffcd38'}}
                   />
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      'aria-labelledby': 'basic-button',
-                    }}
-                  >
-                    <MenuItem
-                      onClick={(e) => setOrderDirection("desc")} 
-                      onClose={handleClose}
-                    >
-                        Most recent cases first
-                    </MenuItem>
-                    <MenuItem
-                      onClick={(e) => setOrderDirection("asc")} 
-                      onClose={handleClose}
-                    >
-                      Most recent cases last
-                    </MenuItem>
-                  </Menu>
                 </IconButton>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                >
+                  <MenuItem
+                    onClick={(e) => setOrderDirection("desc")} 
+                    onClose={handleClose}
+                  >
+                      Most recent cases first
+                  </MenuItem>
+                  <MenuItem
+                    onClick={(e) => setOrderDirection("asc")} 
+                    onClose={handleClose}
+                  >
+                    Most recent cases last
+                  </MenuItem>
+                </Menu>
               </InputAdornment>
             )
           }}
@@ -160,29 +181,39 @@ const Search = () => {
         >
           <LoadingButton 
             variant='outlined' 
-            color='secondary' 
+            color='primary' 
             type="submit" 
             onClick={fetchCAP} 
             sx={{
               mr: 2,
-              py: 1
+              py: 1,
+              color: '#fff',
+              borderColor: '#ffcd38',
+              '&:hover': {
+                borderColor: "#ffcd38",
+              }
             }}
-            startIcon={<SearchRoundedIcon />}
+            startIcon={<SearchRoundedIcon sx={{color: '#ffcd38'}} />}
             loading={isLoadingCAP}
           >
-            Search CAP
+            Caselaw Access Project
           </LoadingButton>
           <LoadingButton 
             variant='outlined' 
             type="submit" 
             onClick={fetchCL}
             sx={{
-              py: 1
+              py: 1,
+              color: '#fff',
+              borderColor: '#ffcd38',
+              '&:hover': {
+                borderColor: "#ffcd38",
+              }
             }}
-            startIcon={<SearchRoundedIcon />}
+            startIcon={<SearchRoundedIcon sx={{color: '#ffcd38'}} />}
             loading={isLoadingCL}
           >
-            Search CourtListener
+            CourtListener
           </LoadingButton>
         </Box>
       </Box>
@@ -192,10 +223,16 @@ const Search = () => {
       }
       {searchResult 
         && (!isLoadingCAP && !isLoadingCL) 
-        && <Results resultsList={searchResult} numResults={numResults} />
+        && (
+          <Results 
+            resultsList={searchResult} 
+            numResults={numResults} 
+            page={page} 
+            setPage={setPage}
+          />)
       }
     </main>
   )
-}
+};
 
-export default Search
+export default Search;

@@ -5,8 +5,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <Container 
-      maxWidth="sm"
+    <Container
       sx={{
         height: "100%",
         display: "flex",

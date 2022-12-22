@@ -11,6 +11,7 @@ import {
   Box, 
   Typography} from "@mui/material";
 import LocationOnSharpIcon from '@mui/icons-material/LocationOnSharp';
+import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import { useState } from "react";
 
 const fortmatResponse = (res) => {
@@ -73,10 +74,26 @@ const SingleListItem = ({ data, idx }) => {
             marginTop: "20px",
             marginBottom: "10px"
           }}
-          >
-          <LocationOnSharpIcon fontSize="small" />
+        >
+          <LocationOnSharpIcon fontSize="small" sx={{mr: 1, color: '#f50057'}} />
           <Typography variant="body2">{listItemCourt}</Typography>
         </Box>
+        <Link 
+          href={listItemURL} 
+          underline="hover"
+          target="_blank"
+          rel="noopener"
+          variant="body2"
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            marginTop: "5px",
+            marginBottom: "10px"
+          }}
+        >
+          <LibraryBooksRoundedIcon fontSize="small" sx={{mr: 1, color: '#f50057'}} />
+          Full text
+        </Link>
       </ListItem>
       <Dialog
         open={open}
@@ -86,17 +103,9 @@ const SingleListItem = ({ data, idx }) => {
       >
         <DialogTitle>{listItemTitle}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="dialog-content" mb={4}>
-            <pre>{fortmatResponse(data)}</pre>
+          <DialogContentText id="dialog-content" mb={4} component="pre">
+            {fortmatResponse(data)}
           </DialogContentText>
-          <Link 
-            href={listItemURL} 
-            underline="hover"
-            target="_blank"
-            rel="noopener"
-          >
-            Full text
-          </Link>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
