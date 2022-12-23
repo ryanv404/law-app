@@ -17,7 +17,8 @@ const Results = ({ resultsList, numResults, page, setPage }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        maxWidth: '720px'
       }}
     >
       <Typography 

@@ -12,7 +12,9 @@ const Footer = () => {
         fontSize: "14px",
         borderTop: "1px solid white",
         overflow: "hidden",
-        marginTop: "40px"
+        marginTop: "40px",
+        maxWidth: "720px",
+        minWidth: "100%"
       }}
     >
       {`Copyright © Ryan ${new Date().getFullYear()}.`}

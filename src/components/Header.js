@@ -10,8 +10,10 @@ const Header = () => {
         height: "40px",
         lineHeight: "40px",
         borderBottom: "1px solid white",
-        marginBottom: "40px",
-        fontSize: "14px"
+        margin: "0px 0px 40px 0px",
+        fontSize: "14px",
+        maxWidth: "720px",
+        minWidth: "100%"
       }}
     >
       Header

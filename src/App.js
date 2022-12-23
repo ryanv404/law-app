@@ -7,14 +7,20 @@ function App() {
   return (
     <Container
       sx={{
-        height: "100%",
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
       }}
     >
       <Header />
-      <Main />
+      <Main
+        sx={{
+          minWidth: "470px",
+          maxWidth: "720px"
+        }}
+      />
       <Footer />
     </Container>
   );

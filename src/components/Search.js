@@ -1,20 +1,11 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { 
-  TextField, 
-  Typography, 
-  Box, 
-  InputAdornment, 
-  IconButton, 
-  Menu, 
-  MenuItem 
-} from '@mui/material';
+import { Typography } from '@mui/material';
 import GavelSharpIcon from '@mui/icons-material/GavelSharp';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import SortRoundedIcon from '@mui/icons-material/SortRounded';
 import axios from 'axios';
+
 import Results from './Results';
-import { LoadingButton } from '@mui/lab';
+import SearchBox from './SearchBox';
 
 const URL_CAP = "https://api.case.law/v1/cases/?search=";
 const URL_CL = "https://www.courtlistener.com/api/rest/v3/search/?q=";
@@ -29,22 +20,13 @@ const Search = () => {
   const [numResults, setNumResults] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
 
-  const [orderByDate, setOrderByDate] = useState(false);
-  const [orderDirection, setOrderDirection] = useState("asc");
+  // const [orderByDate, setOrderByDate] = useState(false);
+  // const [orderDirection, setOrderDirection] = useState("asc");
   // CAP -> "&ordering=-decision_date"
   // CL -> "&order_by=dateFiled%20desc"
   
-  const open = Boolean(anchorEl);
-  
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const { 
     isLoading: isLoadingCAP, 
@@ -111,116 +93,19 @@ const Search = () => {
           }}
         />
       </Typography>
-      <Box 
-        component="form" 
-        onSubmit={(e) => e.preventDefault()}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          mt: "40px",
-          mb: 4
-        }}
-      >
-        <TextField 
-          variant="outlined" 
-          type="text" 
-          name="case_search" 
-          id="case_search"
-          onChange={(e) => setSearchText(e.target.value)} 
-          value={searchText} 
-          autoComplete="off" 
-          label="Search for a case"
-          sx={{
-            my: 3
-          }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton edge='end' onClick={handleClick} onClose={handleClose}>
-                  <SortRoundedIcon
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    sx={{color: '#ffcd38'}}
-                  />
-                </IconButton>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                  }}
-                >
-                  <MenuItem
-                    onClick={(e) => setOrderDirection("desc")} 
-                    onClose={handleClose}
-                  >
-                      Most recent cases first
-                  </MenuItem>
-                  <MenuItem
-                    onClick={(e) => setOrderDirection("asc")} 
-                    onClose={handleClose}
-                  >
-                    Most recent cases last
-                  </MenuItem>
-                </Menu>
-              </InputAdornment>
-            )
-          }}
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <LoadingButton 
-            variant='outlined' 
-            color='primary' 
-            type="submit" 
-            onClick={fetchCAP} 
-            sx={{
-              mr: 2,
-              py: 1,
-              color: '#fff',
-              borderColor: '#ffcd38',
-              '&:hover': {
-                borderColor: "#ffcd38",
-              }
-            }}
-            startIcon={<SearchRoundedIcon sx={{color: '#ffcd38'}} />}
-            loading={isLoadingCAP}
-          >
-            Caselaw Access Project
-          </LoadingButton>
-          <LoadingButton 
-            variant='outlined' 
-            type="submit" 
-            onClick={fetchCL}
-            sx={{
-              py: 1,
-              color: '#fff',
-              borderColor: '#ffcd38',
-              '&:hover': {
-                borderColor: "#ffcd38",
-              }
-            }}
-            startIcon={<SearchRoundedIcon sx={{color: '#ffcd38'}} />}
-            loading={isLoadingCL}
-          >
-            CourtListener
-          </LoadingButton>
-        </Box>
-      </Box>
+      <SearchBox 
+        searchText={searchText}
+        setSearchText={setSearchText}
+        fetchCAP={fetchCAP}
+        fetchCL={fetchCL}
+        isLoadingCAP={isLoadingCAP}
+        isLoadingCL={isLoadingCL}
+      />
       {(isErrorCAP || isErrorCL) 
         && (!isLoadingCAP && !isLoadingCL) 
         && <pre>{errorMsg}</pre>
       }
+
       {searchResult 
         && (!isLoadingCAP && !isLoadingCL) 
         && (
